@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Button } from './components/Button';
 import { PlusButton } from './components/PlusButton';
+import sum from './utils/sum';
 
 const App: React.FunctionComponent = () => {
   const [left, setLeft] = useState('');
   const [right, setRight] = useState('');
+  const [sumValue, setSumValue] = useState('');
   const [ope, setOpe] = useState('');
 
   const onClick = (key: string): void => {
@@ -16,6 +18,9 @@ const App: React.FunctionComponent = () => {
       }
     } else if (key === '+') {
       setOpe(key);
+    } else if (key === '=') {
+      const _sum = sum(Number(left), Number(right));
+      setSumValue(_sum.toString());
     }
   };
   return (
@@ -23,9 +28,10 @@ const App: React.FunctionComponent = () => {
       <header>電卓</header>
       <div className="display">{left}</div>
       <div className="display">{right}</div>
+      <div className="display">{sumValue}</div>
       <div className="input">
         <div className="numbers">
-          {['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'].map((el) => (
+          {['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '='].map((el) => (
             <Button
               onClick={() => {
                 onClick(el);
